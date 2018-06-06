@@ -26,8 +26,10 @@ const marcas =
   'Alga Maris',
   'Acorelle',
    ]
+   const submarcas = ['Dr Hauschka',
+  ]
 
-const submarcas = ['Dr Hauschka',
+const subsubmarcas = ['Dr Hauschka',
 'Avril','Les Sens de Marrakesh']
 
 var items = allProducts.map(x=> x.companyName);
@@ -47,7 +49,7 @@ const cate:presObj[] = marcas.map(x=>
     }
  
     i = i+1;
-    if(submarcas.indexOf(x)==-1)
+    if(subsubmarcas.indexOf(x)==-1)
     newCa.search= x.substr(0,4);
    
     return newCa
@@ -55,14 +57,26 @@ const cate:presObj[] = marcas.map(x=>
 
 cate.map(x=> 
     {
-    if(submarcas.indexOf(x.name)!=-1)
+    if(subsubmarcas.indexOf(x.name)!=-1)
     {
+      let uni=[];
       var meta2 = allProducts
       .filter(y=>y.companyName==x.name)
-      .map(z=> z.metadata[1]).filter((b, ii, a) => a.indexOf(b) == ii)
+      .map(z=> [z.metadata[0],z.metadata[1]])
+      .map(dup=> {
+          if (dup[1]==undefined)
+          return dup[0];
+
+          return dup[1];
+
+        }
+    )
+      .filter((b, ii, a) => a.indexOf(b) == ii)
+      
       x.childs=[]
       meta2.forEach(meta=>
             {
+             
                 x.childs.push(i)
                 let newCa:presObj= {
                     id:i,
